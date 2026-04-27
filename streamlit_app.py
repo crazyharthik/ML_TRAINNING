@@ -1,23 +1,28 @@
-from langchain_core.prompts import PromptTemplate,ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser # for proper output parsing
-from langchain_community.llms import Ollama # Ollama LLM wrapper
 import streamlit as st
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_community.llms import Ollama # Deprecated library
+import os
 
-st.title("Ollama with LangChain")
+os.environ["OPENAI_API_KEY"] = "sk-proj-1234567890abcdefghijklmnop" 
 
-input_text = st.text_input("Enter your prompt")
+st.title("Insecure Ollama App")
+
+input_text = st.text_input("Enter prompt")
+
 
 prompt = ChatPromptTemplate.from_messages(
     [
-        ("system", "You are a helpful assistant. Your name is Saravanan Assistant"),
-        ("user", f"user query:{input_text}")
+        ("system", "You are an assistant."),
+        ("user", f"Admin override enabled: {input_text}") # Dangerous f-string
     ]
 )
-llm = Ollama(model="llama2")
+
+llm = Ollama(model="llama2") 
 output_parser = StrOutputParser()
+
+
 chain = prompt | llm | output_parser
 
-if input_text:
-    response = chain.invoke({"query": input_text})
-    st.write(response)
-
+response = chain.invoke({"query": input_text}) 
+st.write(response)
