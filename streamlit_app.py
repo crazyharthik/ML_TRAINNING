@@ -3,7 +3,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_community.llms import Ollama # Deprecated library
 import os
-#ai
+#ai 
 os.environ["OPENAI_API_KEY"] = "sk-proj-1234567890abcdefghijklmnop" 
 
 st.title("Insecure Ollama App")
